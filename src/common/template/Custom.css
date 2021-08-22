@@ -1,0 +1,38 @@
+header a{
+    color: white !important;
+}
+
+header .navbar {
+    display: block !important;
+}
+
+header .navbar > :nth-child(1), header .navbar > :nth-child(2){
+    display: flex !important;
+    justify-content: center;
+    margin: 0;
+}
+
+.navbar .navbar-brand {
+    font-size: 2em !important;
+}
+
+.navbar .nav-item a {
+    font-size: 1.3em;
+}
+
+.navbar .nav-item a:hover {
+    background-color: aliceblue;
+    color: black !important;
+    border-bottom: 4px solid salmon;
+}
+
+.content {
+    padding: 20px;
+}
+
+
+footer{
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px 10px 10px 10px;
+}

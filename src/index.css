@@ -1,13 +1,27 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "Oswald-Regular";
+  src: url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+  src: url("./assets/fonts/Oswald-Regular.ttf");
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: "Oswald-bold";
+  src: url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+  src: url("./assets/fonts/Oswald-Bold.ttf");
+}
+
+
+body {
+  margin: 0 auto;
+  font-family: 'Oswald-Regular', sans-serif !important;
+  letter-spacing: .05em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: aliceblue !important;
+}
+
+.wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  background-color: #fff;
 }
