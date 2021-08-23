@@ -1,10 +1,12 @@
 import React from 'react';
 
-export default props => (
+const Footer =  props => (
     <footer>
         <strong>
             Copyright &copy; 2021
-            <a href="#" target="_blank">Enzo Rossi</a>.
+            <span  target="_blank"> Enzo Rossi</span>.
         </strong>
     </footer>
 )
+
+export default Footer;

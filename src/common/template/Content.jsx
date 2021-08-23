@@ -1,13 +1,18 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
 
 /**
  * Content *
  * title and textarea
  */
 
-export default props => (
+ const Content = props => (
     <section className="content">
-        <h2>{props.title}</h2>
-        {props.children}
+        <Container fluid>
+            <h1>{props.title}</h1>
+            {props.children}
+        </Container>
     </section>
 )
+
+export default Content;

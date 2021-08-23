@@ -1,11 +1,11 @@
 import React from 'react';
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 
 /**
  * Header *
  * Tabs navigation
  */
-export default props => (
+ const Header = props => (
     <header>
         <Navbar bg="dark" variant="dark">
                 <Navbar.Brand href="#home">Manipular Texto</Navbar.Brand>
@@ -23,3 +23,5 @@ export default props => (
         </Navbar>
     </header>   
 )
+
+export default Header;

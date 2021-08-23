@@ -17,7 +17,7 @@ header .navbar > :nth-child(1), header .navbar > :nth-child(2){
 }
 
 .navbar .nav-item a {
-    font-size: 1.3em;
+    font-size: 1.35em;
 }
 
 .navbar .nav-item a:hover {
@@ -28,8 +28,29 @@ header .navbar > :nth-child(1), header .navbar > :nth-child(2){
 
 .content {
     padding: 20px;
+    overflow: hidden;
 }
 
+.content p {
+    font-size: 1.2em;
+    color: grey;
+}
+
+.content .btn-group {
+    white-space: nowrap;
+    
+}
+
+.content .btn-group button {
+    margin-right: 5px;
+    margin-bottom: 10px;
+    font-size: 1.15em;
+}
+
+.content .btn-group button:hover {
+    background-color: aliceblue;
+    color: black;
+}
 
 footer{
     display: flex;
