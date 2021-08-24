@@ -25,11 +25,32 @@ class CaseManipulator extends Component
     handleChange(e)
     {
         this.setState({...this.state, text: e.target.value, 
-                        count: {charCount: e.target.value.length}});
+                        count: {charCount: e.target.value.length}});                  
     }
 
     // Altera no estado todo o texto digitado para maíusculo
-    toUpperCase() { this.setState({ text: this.state.text.toUpperCase()}) }
+    toUpperCase() { this.setState({ text: this.state.text.toUpperCase()})}
+
+    toCapitalizeCase() 
+    { 
+        const text = this.state.text;
+
+        /**
+         * Quebra o texto através do regex (\n - quebra de linha)
+         * faz um mapeamento das palavras no array e quebra o texto nos 'espaços'
+         * transforma o primeiro caractere para maiúsculo e o resto para minúsculo
+         * adiciona os 'espaços' entre os arrays, e por fim, adiciona as quebras de linhas.
+         */
+        const textTitleCased = text.split(/\r?\n/).map(word => (
+            word.split(' ').map(w => (
+                w.charAt(0).toUpperCase() + w.slice(1)
+                )).join(' ')
+        )).join('\n');
+
+
+        this.setState({ text: textTitleCased });
+    }
+
 
     // Altera no estado todo o texto digitado para minúsculo
     toLowerCase() { this.setState({ text: this.state.text.toLowerCase()}) }
@@ -47,8 +68,8 @@ class CaseManipulator extends Component
                         <Button variant="dark" onClick={() => this.toLowerCase()}>texto em minúsculo</Button>
                         <Button variant="dark" onClick={() => this.toUpperCase()}>TEXTO EM MAIÚSCULO</Button>
                         <Button variant="dark" >Caixa de sentença</Button>
-                        <Button variant="dark">Palavras Com Letra Maíuscula</Button>
-                        <Button variant="dark">Caixa de Título</Button>
+                        <Button variant="dark" onClick={() => this.toCapitalizeCase()}>Palavras Com Letra Maíuscula</Button>
+                        <Button variant="dark" >Caixa de Título</Button>
                         <Button variant="dark">Baixar texto</Button>
                         <Button variant="dark">Copiar texto</Button>
                         <Button variant="secondary" onClick={() => this.clear()}>Limpar</Button>
