@@ -31,6 +31,18 @@ class CaseManipulator extends Component
     // Altera no estado todo o texto digitado para maíusculo
     toUpperCase() { this.setState({ text: this.state.text.toUpperCase()})}
 
+    // Transforma as iniciais das palavras para maiúsculo, após um ponto, exclamação ou interrogação
+    toSentenceCase()
+    {
+        const text = this.state.text;
+
+        // Após ponto, exclamação ou interrogação ele irá colocar o caractere em maiúsulo.
+        const textSentenced = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
+        
+        this.setState({ text: textSentenced });
+    }
+
+    // transforma todas as iniciais das palavras para maiúsculo
     toCapitalizeCase() 
     { 
         const text = this.state.text;
@@ -67,7 +79,7 @@ class CaseManipulator extends Component
                     <Menu>
                         <Button variant="dark" onClick={() => this.toLowerCase()}>texto em minúsculo</Button>
                         <Button variant="dark" onClick={() => this.toUpperCase()}>TEXTO EM MAIÚSCULO</Button>
-                        <Button variant="dark" >Caixa de sentença</Button>
+                        <Button variant="dark" onClick={() => this.toSentenceCase()}>Caixa de sentença</Button>
                         <Button variant="dark" onClick={() => this.toCapitalizeCase()}>Palavras Com Letra Maíuscula</Button>
                         <Button variant="dark" >Caixa de Título</Button>
                         <Button variant="dark">Baixar texto</Button>
