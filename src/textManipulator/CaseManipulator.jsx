@@ -29,8 +29,25 @@ class CaseManipulator extends Component
     // A cada digito ele modifica o estado
     handleChange(e)
     {
+        const wordCount = this.countWords(e);
         this.setState({...this.state, text: e.target.value, 
-                        count: {charCount: e.target.value.length}});                  
+                        count: { charCount: e.target.value.length, 
+                                 wordCount: wordCount }});  
+                                      
+    }
+
+    // Faz a contagem de palavras digitadas
+    countWords(e)
+    {
+        const text = e.target.value;
+        const words = text.split(' ');
+
+        // remove os elementos vazios de dentro do array
+        const filtered = words.filter((e) => {
+            return e !== '';
+        }).length;
+
+        return filtered;
     }
 
     // Altera no estado todo o texto digitado para minúsculo
