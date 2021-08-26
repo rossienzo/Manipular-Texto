@@ -8,7 +8,9 @@ import TextCount from "../common/template/TextCount";
 const initialState = {
     text: '',
     alertMsg: {
-        visible: false
+        visible: false,
+        title: '',
+        text: ''
     },
     count: {
         lineCount: 0,
@@ -74,9 +76,37 @@ class CaseManipulator extends Component
         const text = this.state.text;
         
         navigator.clipboard.writeText(text).then(() => {
-            this.setState({ alertMsg: {visible: true}})
+            this.setState({ alertMsg: {visible: true, title: 'Copiar', text:'Texto copiado para a prancheta!'}})
         });
     }
+
+    // função para fazer download do texto
+    textDownload() {
+        const text = this.state.text;
+        const filename = 'text';
+        
+        new Promise((resolve, reject) => {
+            var file = new Blob([text], {type: "text/plain;charset=utf-8"});
+
+            // IE10+
+            if (window.navigator.msSaveOrOpenBlob) 
+                window.navigator.msSaveOrOpenBlob(file, filename);
+            else // Outros navegadores
+            { 
+                var a = document.createElement("a"),
+                    url = URL.createObjectURL(file);
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);  
+                }, 0); 
+            }
+        }).then(this.setState({ alertMsg: {visible: true, title: 'Baixar', text:'Baixando arquivo.'}}));
+}
+    
     
 
     // Reseta o estado
@@ -94,7 +124,7 @@ class CaseManipulator extends Component
                         <Button variant="dark" onClick={() => this.toSentenceCase()}>Caixa de sentença</Button>
                         <Button variant="dark" onClick={() => this.toCapitalizeCase()}>Palavras Com Letra Maíuscula</Button>
                         <Button variant="dark" >Caixa de Título</Button>
-                        <Button variant="dark">Baixar texto</Button>
+                        <Button variant="dark" onClick={() => this.textDownload()}>Baixar texto</Button>
                         <Button variant="dark" onClick={e => this.textCopyToClipboard(e)}>Copiar texto</Button>
                         <Button variant="secondary" onClick={() => this.clear()}>Limpar</Button>
                     </Menu>
@@ -102,16 +132,16 @@ class CaseManipulator extends Component
                     <TextForm id="textForm" text={this.state.text} change={e => this.handleChange(e)}/>
 
                     <ToastContainer position='middle-center'>
-                        <Toast delay={1800} 
+                        <Toast delay={2000} 
                                show={this.state.alertMsg.visible} 
                                onClose={() => this.setState({ alertMsg: {visible: false} })}
                                autohide>
                             <Toast.Header closeButton={false}>
                                 <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
                                 <strong className="me-auto">Manipular Texto</strong>
-                                <small>Copiado</small>
+                                <small>{this.state.alertMsg.title}</small>
                             </Toast.Header>
-                            <Toast.Body>Texto copiado para a prancheta!</Toast.Body>
+                            <Toast.Body>{this.state.alertMsg.text}</Toast.Body>
                         </Toast>
                      </ToastContainer>
 
