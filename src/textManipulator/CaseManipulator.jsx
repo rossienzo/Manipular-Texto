@@ -29,15 +29,25 @@ class CaseManipulator extends Component
     // A cada digito ele modifica o estado
     handleChange(e)
     {
-        const wordCount = this.countWords(e);
+        const wordCount = this.wordCount(e);
+        const lineCount = this.lineCount(e);
         this.setState({...this.state, text: e.target.value, 
                         count: { charCount: e.target.value.length, 
-                                 wordCount: wordCount }});  
+                                 wordCount: wordCount,
+                                 lineCount: lineCount }});  
                                       
+    }
+    
+    // Faz a contagem de linha
+    lineCount(e)
+    {
+        const text = e.target.value;
+        const lines = text.split(/\r\n|\r|\n/).length;
+        return lines;
     }
 
     // Faz a contagem de palavras digitadas
-    countWords(e)
+    wordCount(e)
     {
         const text = e.target.value;
         const words = text.split(' ');
@@ -46,6 +56,7 @@ class CaseManipulator extends Component
         const filtered = words.filter((e) => {
             return e !== '';
         }).length;
+        
 
         return filtered;
     }
@@ -62,9 +73,15 @@ class CaseManipulator extends Component
         const text = this.state.text;
 
         // Após ponto, exclamação ou interrogação ele irá colocar o caractere em maiúsulo.
-        const textSentenced = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
+        const textConverted = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
         
-        this.setState({ text: textSentenced });
+        this.setState({ text: textConverted });
+    }
+
+    toTitleCase()
+    {
+        const text = this.state.text;
+        
     }
 
     // transforma todas as iniciais das palavras para maiúsculo
@@ -78,13 +95,13 @@ class CaseManipulator extends Component
          * transforma o primeiro caractere para maiúsculo e o resto para minúsculo
          * adiciona os 'espaços' entre os arrays, e por fim, adiciona as quebras de linhas.
          */
-        const textTitleCased = text.split(/\r?\n/).map(word => (
+        const textConverted = text.split(/\r?\n/).map(word => (
             word.split(' ').map(w => (
                 w.charAt(0).toUpperCase() + w.slice(1)
                 )).join(' ')
         )).join('\n');
 
-        this.setState({ text: textTitleCased });
+        this.setState({ text: textConverted });
     }
 
     // Copia o texto digitado
