@@ -4,7 +4,7 @@ import {  ButtonGroup } from "react-bootstrap";
 
 const Menu = props => (
     <Row>
-        <ButtonGroup aria-label="Cases">
+        <ButtonGroup id={props.id} aria-label="Cases">
             {props.children}
         </ButtonGroup>
     </Row>

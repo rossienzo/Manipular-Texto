@@ -7,6 +7,7 @@ import TextCount from "../common/template/TextCount";
 
 const initialState = {
     text: '',
+    dropDownVisibility: "hidden",
     alertMsg: {
         visible: false,
         title: '',
@@ -148,12 +149,15 @@ class CaseManipulator extends Component
     clear() { this.setState(initialState) }
 
     render()
-    {
+    { 
+
+        
         return (
             <div>
                 <Content title="Manipular caixa de texto">
                     <p>Digite o texto e escolha o tipo de caixa para converte-lo.</p>
-                    <Menu>
+                    
+                    <Menu id="groupButton">
                         <Button variant="dark" onClick={() => this.toLowerCase()}>texto em minúsculo</Button>
                         <Button variant="dark" onClick={() => this.toUpperCase()}>TEXTO EM MAIÚSCULO</Button>
                         <Button variant="dark" onClick={() => this.toSentenceCase()}>Caixa de sentença</Button>
@@ -163,6 +167,9 @@ class CaseManipulator extends Component
                         <Button variant="dark" onClick={e => this.textCopyToClipboard(e)}>Copiar texto</Button>
                         <Button variant="secondary" onClick={() => this.clear()}>Limpar</Button>
                     </Menu>
+                    
+
+
 
                     <TextForm id="textForm" text={this.state.text} change={e => this.handleChange(e)}/>
 

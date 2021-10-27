@@ -38,11 +38,13 @@ header .navbar > :nth-child(1), header .navbar > :nth-child(2){
 
 .content .btn-group {
     white-space: nowrap;
-    
+    flex-wrap: wrap;
+
 }
 
-.content .btn-group button {
-    margin-right: 5px;
+.content .btn-group button { 
+    margin-left: 5px !important;
+    margin-right: 5px !important;
     margin-bottom: 10px;
     font-size: 1.15em;
 }
