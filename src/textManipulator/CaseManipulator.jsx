@@ -37,7 +37,7 @@ class CaseManipulator extends Component
                                  lineCount: lineCount }});  
                                       
     }
-    
+
     // Faz a contagem de linha
     lineCount(e)
     {
@@ -50,14 +50,15 @@ class CaseManipulator extends Component
     wordCount(e)
     {
         const text = e.target.value;
-        const words = text.split(' ');
+
+        // quebra ao localizar o enter ou o espaço
+        const words = text.split(/\n\s|\n|\s/g); 
 
         // remove os elementos vazios de dentro do array
         const filtered = words.filter((e) => {
             return e !== '';
         }).length;
         
-
         return filtered;
     }
 
