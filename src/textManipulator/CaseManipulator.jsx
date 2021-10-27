@@ -7,7 +7,6 @@ import TextCount from "../common/template/TextCount";
 
 const initialState = {
     text: '',
-    dropDownVisibility: "hidden",
     alertMsg: {
         visible: false,
         title: '',
@@ -80,11 +79,27 @@ class CaseManipulator extends Component
         this.setState({ text: textConverted });
     }
 
+    // Transforma as palavras que não sejam preposições, para as iniciais maiúsculas
     toTitleCase()
     {
-        const text = this.state.text;
+        const lowCasePrepositionWordsBR = ["da", "do", "das", "dos", "a", "o", "e", "de", "os", "as", "um",
+                                    "um", "para", "em", "ele", "ela", "eles", "elas", "este", "esta", "no",
+                                    "na", "isto", "esse", "isso", "com", "à", "até", "sem", "aos", "ou", "seja",
+                                    "é", "ao"];
+        const text = this.state.text.toLowerCase();
         
+        const textConverted = text.split(/\r?\n/).map(word => (
+            word.split(' ').map((w, i) => (
+                w = (lowCasePrepositionWordsBR.includes(w)) ? 
+                            ((i === 0) ? w.charAt(0).toUpperCase() + w.slice(1) : w.toLowerCase()) 
+                        : w.charAt(0).toUpperCase() + w.slice(1)
+                
+                )).join(' ')
+        )).join('\n');
+        
+        this.setState({ text: textConverted });
     }
+
 
     // transforma todas as iniciais das palavras para maiúsculo
     toCapitalizeCase() 
@@ -162,7 +177,7 @@ class CaseManipulator extends Component
                         <Button variant="dark" onClick={() => this.toUpperCase()}>TEXTO EM MAIÚSCULO</Button>
                         <Button variant="dark" onClick={() => this.toSentenceCase()}>Caixa de sentença</Button>
                         <Button variant="dark" onClick={() => this.toCapitalizeCase()}>Palavras Com Letra Maíuscula</Button>
-                        <Button variant="dark" >Caixa de Título</Button>
+                        <Button variant="dark" onClick={() => this.toTitleCase()}>Caixa de Título</Button>
                         <Button variant="dark" onClick={() => this.textDownload()}>Baixar texto</Button>
                         <Button variant="dark" onClick={e => this.textCopyToClipboard(e)}>Copiar texto</Button>
                         <Button variant="secondary" onClick={() => this.clear()}>Limpar</Button>
