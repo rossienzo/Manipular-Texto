@@ -26,6 +26,13 @@ header .navbar > :nth-child(1), header .navbar > :nth-child(2){
     border-bottom: 4px solid salmon;
 }
 
+/* Item selecionado na barra de navegação */
+.navbar .nav-item .item-selected {
+    background-color: white;
+    color: black !important;
+    border-bottom: 4px solid salmon;
+}
+
 .content {
     padding: 20px;
     overflow: hidden;
@@ -39,7 +46,6 @@ header .navbar > :nth-child(1), header .navbar > :nth-child(2){
 .content .btn-group {
     white-space: nowrap;
     flex-wrap: wrap;
-
 }
 
 .content .btn-group button { 

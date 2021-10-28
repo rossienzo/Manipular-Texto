@@ -1,8 +1,8 @@
 import React from 'react';
 
 const TextForm = props => (
-    <textarea className="textarea" id="story" name="story"
-              rows="15"  autoFocus 
+    <textarea className="textarea" id="story" name="story" disabled={props.disabled}
+              rows={props.rows} autoFocus 
               placeholder="Digite seu texto aqui." value={props.text} onChange={props.change}>
     </textarea>
 )

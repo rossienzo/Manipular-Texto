@@ -3,18 +3,19 @@ import React from 'react';
 /* Styles */
 import '../common/template/Custom.css';
 import '../textManipulator/Custom.css';
+import '../textManipulator/WideTextGenerator.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /* Components */
 import Header from '../common/template/Header';
 import Footer from '../common/template/Footer';
-import CaseManipulator from '../textManipulator/CaseManipulator';
+import Routes from './Routes';
 
 
 const App = props => (
     <div className="wrapper">
         <Header />
-        <CaseManipulator />
+        <Routes />
         <Footer />
     </div>
 )

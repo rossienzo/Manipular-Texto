@@ -2,171 +2,40 @@ import { Button, Toast, ToastContainer } from "react-bootstrap";
 import { Component } from "react";
 import Content from "../common/template/Content";
 import Menu from "../common/template/Menu";
-import TextForm from './TextForm';
+import TextForm from '../common/template/TextForm';
 import TextCount from "../common/template/TextCount";
-
-const initialState = {
-    text: '',
-    alertMsg: {
-        visible: false,
-        title: '',
-        text: ''
-    },
-    count: {
-        lineCount: 0,
-        wordCount: 0,
-        charCount: 0
-    }
-}
+import { initialState } from "./state";
+import { lineCount, wordCount, 
+         toLowerCase, toSentenceCase, toUpperCase, textCopyToClipboard,
+         textDownload, toCapitalizeCase, toTitleCase, clear } from './scriptsTextManipulator'
 
 class CaseManipulator extends Component
 {
     constructor(props) {
         super(props);
-        this.state = initialState
+        
+        this.state = initialState;
+        this.toLowerCase = toLowerCase;
+        this.toSentenceCase = toSentenceCase;
+        this.toUpperCase = toUpperCase;
+        this.textCopyToClipboard = textCopyToClipboard;
+        this.textDownload = textDownload;
+        this.toCapitalizeCase = toCapitalizeCase;
+        this.toTitleCase = toTitleCase;
+        this.clear = clear;
     }
 
     // A cada digito ele modifica o estado
     handleChange(e)
     {
-        const wordCount = this.wordCount(e);
-        const lineCount = this.lineCount(e);
         this.setState({...this.state, text: e.target.value, 
                         count: { charCount: e.target.value.length, 
-                                 wordCount: wordCount,
-                                 lineCount: lineCount }});  
-                                      
+                                 wordCount: wordCount(e),
+                                 lineCount: lineCount(e) }});                                        
     }
-
-    // Faz a contagem de linha
-    lineCount(e)
-    {
-        const text = e.target.value;
-        const lines = text.split(/\r\n|\r|\n/).length;
-        return lines;
-    }
-
-    // Faz a contagem de palavras digitadas
-    wordCount(e)
-    {
-        const text = e.target.value;
-
-        // quebra ao localizar o enter ou o espaço
-        const words = text.split(/\n\s|\n|\s/g); 
-
-        // remove os elementos vazios de dentro do array
-        const filtered = words.filter((e) => {
-            return e !== '';
-        }).length;
-        
-        return filtered;
-    }
-
-    // Altera no estado todo o texto digitado para minúsculo
-    toLowerCase() { this.setState({ text: this.state.text.toLowerCase()}) }
-
-    // Altera no estado todo o texto digitado para maíusculo
-    toUpperCase() { this.setState({ text: this.state.text.toUpperCase()})}
-
-    // Transforma as iniciais das palavras para maiúsculo, após um ponto, exclamação ou interrogação
-    toSentenceCase()
-    {
-        const text = this.state.text;
-
-        // Após ponto, exclamação ou interrogação ele irá colocar o caractere em maiúsulo.
-        const textConverted = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
-        
-        this.setState({ text: textConverted });
-    }
-
-    // Transforma as palavras que não sejam preposições, para as iniciais maiúsculas
-    toTitleCase()
-    {
-        const lowCasePrepositionWordsBR = ["da", "do", "das", "dos", "a", "o", "e", "de", "os", "as", "um",
-                                    "um", "para", "em", "ele", "ela", "eles", "elas", "este", "esta", "no",
-                                    "na", "isto", "esse", "isso", "com", "à", "até", "sem", "aos", "ou", "seja",
-                                    "é", "ao"];
-        const text = this.state.text.toLowerCase();
-        
-        const textConverted = text.split(/\r?\n/).map(word => (
-            word.split(' ').map((w, i) => (
-                w = (lowCasePrepositionWordsBR.includes(w)) ? 
-                            ((i === 0) ? w.charAt(0).toUpperCase() + w.slice(1) : w.toLowerCase()) 
-                        : w.charAt(0).toUpperCase() + w.slice(1)
-                
-                )).join(' ')
-        )).join('\n');
-        
-        this.setState({ text: textConverted });
-    }
-
-
-    // transforma todas as iniciais das palavras para maiúsculo
-    toCapitalizeCase() 
-    { 
-        const text = this.state.text;
-
-        /**
-         * Quebra o texto através do regex (\n - quebra de linha)
-         * faz um mapeamento das palavras no array e quebra o texto nos 'espaços'
-         * transforma o primeiro caractere para maiúsculo e o resto para minúsculo
-         * adiciona os 'espaços' entre os arrays, e por fim, adiciona as quebras de linhas.
-         */
-        const textConverted = text.split(/\r?\n/).map(word => (
-            word.split(' ').map(w => (
-                w.charAt(0).toUpperCase() + w.slice(1)
-                )).join(' ')
-        )).join('\n');
-
-        this.setState({ text: textConverted });
-    }
-
-    // Copia o texto digitado
-    textCopyToClipboard(e)
-    {
-        const text = this.state.text;
-        
-        navigator.clipboard.writeText(text).then(() => {
-            this.setState({ alertMsg: {visible: true, title: 'Copiar', text:'Texto copiado para a prancheta!'}})
-        });
-    }
-
-    // função para fazer download do texto
-    textDownload() {
-        const text = this.state.text;
-        const filename = 'text';
-        
-        new Promise((resolve, reject) => {
-            var file = new Blob([text], {type: "text/plain;charset=utf-8"});
-
-            // IE10+
-            if (window.navigator.msSaveOrOpenBlob) 
-                window.navigator.msSaveOrOpenBlob(file, filename);
-            else // Outros navegadores
-            { 
-                var a = document.createElement("a"),
-                    url = URL.createObjectURL(file);
-                a.href = url;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);  
-                }, 0); 
-            }
-        }).then(this.setState({ alertMsg: {visible: true, title: 'Baixar', text:'Baixando arquivo.'}}));
-}
-    
-    
-
-    // Reseta o estado
-    clear() { this.setState(initialState) }
 
     render()
     { 
-
-        
         return (
             <div>
                 <Content title="Manipular caixa de texto">
@@ -182,11 +51,8 @@ class CaseManipulator extends Component
                         <Button variant="dark" onClick={e => this.textCopyToClipboard(e)}>Copiar texto</Button>
                         <Button variant="secondary" onClick={() => this.clear()}>Limpar</Button>
                     </Menu>
-                    
 
-
-
-                    <TextForm id="textForm" text={this.state.text} change={e => this.handleChange(e)}/>
+                    <TextForm id="textForm" text={this.state.text} change={e => this.handleChange(e)} rows="15"/>
 
                     <ToastContainer position='middle-center'>
                         <Toast delay={2000} 
