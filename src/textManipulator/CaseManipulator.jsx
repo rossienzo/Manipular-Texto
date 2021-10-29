@@ -38,9 +38,9 @@ class CaseManipulator extends Component
     { 
         return (
             <div>
-                <Content title="Manipular caixa de texto">
-                    <p>Digite o texto e escolha o tipo de caixa para converte-lo.</p>
-                    
+                <Content title="Manipular caixa de texto" 
+                         subtitle="Digite o texto e escolha o tipo de caixa para converte-lo.">
+
                     <Menu id="groupButton">
                         <Button variant="dark" onClick={() => this.toLowerCase()}>texto em minúsculo</Button>
                         <Button variant="dark" onClick={() => this.toUpperCase()}>TEXTO EM MAIÚSCULO</Button>
@@ -48,7 +48,7 @@ class CaseManipulator extends Component
                         <Button variant="dark" onClick={() => this.toCapitalizeCase()}>Palavras Com Letra Maíuscula</Button>
                         <Button variant="dark" onClick={() => this.toTitleCase()}>Caixa de Título</Button>
                         <Button variant="dark" onClick={() => this.textDownload()}>Baixar texto</Button>
-                        <Button variant="dark" onClick={e => this.textCopyToClipboard(e)}>Copiar texto</Button>
+                        <Button variant="dark" onClick={() => this.textCopyToClipboard()}>Copiar texto</Button>
                         <Button variant="secondary" onClick={() => this.clear()}>Limpar</Button>
                     </Menu>
 

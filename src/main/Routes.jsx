@@ -6,7 +6,7 @@ import WideTextGenerator from "../textManipulator/WideTextGenerator";
 const Routes =  props => (
     <Router>
         <Switch>
-            <Route exact path="/" component={CaseManipulator} />
+            <Route exact path="/case-manipulate" component={CaseManipulator} />
             <Route path="/wide-text" component={WideTextGenerator}/>
             <Route path='*' component={CaseManipulator}/>
         </Switch>

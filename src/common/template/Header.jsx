@@ -6,24 +6,24 @@ import { Navbar, Nav } from 'react-bootstrap';
  * Tabs navigation
  */
 
-// Pega o pathname do link
-const isActive = window.location.pathname;
+// pega o pathname do URL, transforma em array e verifica se o path está dentro do array;
+const isActive = (path) => window.location.pathname.split("/").join("/").includes(path);
 
 const Header = props => (
     <header>
         <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="#home">Manipular Texto</Navbar.Brand>
-                <Nav className="navbar"  defaultActiveKey="/">
+                <Navbar.Brand href="/case-manipulate">Manipular Texto</Navbar.Brand>
+                <Nav className="navbar">
                     <Nav.Item>
-                        <Nav.Link className={isActive === "/" ? "item-selected" : ''} 
-                                  href="/">Manipular Caixa</Nav.Link>
+                        <Nav.Link className={isActive("/case-manipulate") ? "item-selected" : ''} 
+                                  href="/case-manipulate">Manipular Caixa</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link className={isActive === "/generate-text" ? "item-selected" : ''} 
+                        <Nav.Link className={isActive("/generate-text") ? "item-selected" : ''} 
                                   href="/generate-text">Gerar Texto</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link className={isActive === "/wide-text" ? "item-selected" : ''} 
+                        <Nav.Link className={isActive("/wide-text") ? "item-selected" : ''} 
                                   href="/wide-text">Espaçar Texto</Nav.Link>
                     </Nav.Item>
                 </Nav>

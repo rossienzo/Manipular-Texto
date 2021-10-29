@@ -3,8 +3,8 @@ import React from 'react';
 const Footer =  props => (
     <footer>
         <strong>
-            Copyright &copy; 2021
-            <span  target="_blank"> Enzo Rossi</span>.
+            Desenvolvido por
+            <span  target="_blank"> Enzo Rossi - 2021</span>.
         </strong>
     </footer>
 )

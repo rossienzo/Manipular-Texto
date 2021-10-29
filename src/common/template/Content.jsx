@@ -10,6 +10,7 @@ import { Container } from 'react-bootstrap';
     <section className="content">
         <Container fluid>
             <h1>{props.title}</h1>
+            <p>{props.subtitle}</p>
             {props.children}
         </Container>
     </section>

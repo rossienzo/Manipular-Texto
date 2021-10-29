@@ -60,6 +60,15 @@ header .navbar > :nth-child(1), header .navbar > :nth-child(2){
     color: black;
 }
 
+.content textarea {
+    -webkit-box-shadow: 6px 6px 8px 1px rgba(0,0,0,0.15); 
+    box-shadow: 6px 6px 8px 1px rgba(0,0,0,0.15);
+}
+
+.content .list-group {
+    margin-top: 15px;
+}
+
 footer{
     display: flex;
     justify-content: flex-end;

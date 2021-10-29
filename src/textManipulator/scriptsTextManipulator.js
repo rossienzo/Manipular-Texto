@@ -84,9 +84,9 @@ export function toCapitalizeCase()
 }
 
 // Copia o texto digitado
-export function textCopyToClipboard(e)
+export function textCopyToClipboard(text = this.state.text)
 {
-    const text = this.state.text;
+    //const text = this.state.text;
     
     navigator.clipboard.writeText(text).then(() => {
         this.setState({ alertMsg: {visible: true, title: 'Copiar', text:'Texto copiado para a prancheta!'}})
@@ -94,10 +94,7 @@ export function textCopyToClipboard(e)
 }
 
 // função para fazer download do texto
-export function textDownload() {
-    const text = this.state.text;
-    const filename = 'text';
-    
+export function textDownload(text = this.state.text, filename = 'text') {
     new Promise((resolve, reject) => {
         var file = new Blob([text], {type: "text/plain;charset=utf-8"});
 
@@ -122,3 +119,17 @@ export function textDownload() {
 
 // Reseta o estado
 export function clear() { this.setState(initialState) }
+
+
+/*
+ * Utilizando o unicode text, coloca o caractere no seu width máximo
+ * e exporta a string formatada
+*/
+const charToFullWidth = char => {
+	const c = char.charCodeAt( 0 )
+	return c >= 33 && c <= 126
+		? String.fromCharCode( ( c - 33 ) + 65281 )
+		: char
+}
+
+export const stringToFullWidth = string => string.split( '' ).map( charToFullWidth ).join( '' )
