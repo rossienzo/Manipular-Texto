@@ -84,13 +84,49 @@ export function toCapitalizeCase()
 }
 
 // Copia o texto digitado
+/*
 export function textCopyToClipboard(text = this.state.text)
 {
-    //const text = this.state.text;
-    
     navigator.clipboard.writeText(text).then(() => {
         this.setState({ alertMsg: {visible: true, title: 'Copiar', text:'Texto copiado para a prancheta!'}})
     });
+}
+*/
+
+export function textCopyToClipboard(text = this.state.text)
+{
+    // verifica se o contexto é seguro antes de copiar
+    if (navigator.clipboard && window.isSecureContext)
+    {
+        navigator.clipboard.writeText(text).then(() => {
+            this.setState({ alertMsg: {visible: true, title: 'Copiar', text:'Texto copiado para a prancheta!'}})
+        });
+    }
+    else
+    {
+        // cria um elemento
+        let textArea = document.createElement("textarea");
+        // adiciona o texto dentro do elemento
+        textArea.value = text;
+        
+        // envia o elemento para fora do campo de visão 
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        return new Promise((res, rej) => {
+            // copia o texto
+            document.execCommand('copy') ? res() : rej();
+            textArea.remove();
+        }).then(() => {
+            this.setState({ alertMsg: {visible: true, title: 'Copiar', text:'Texto copiado para a prancheta!'}})
+        });
+    }
+
+    
 }
 
 // função para fazer download do texto
@@ -126,10 +162,10 @@ export function clear() { this.setState(initialState) }
  * e exporta a string formatada
 */
 const charToFullWidth = char => {
-	const c = char.charCodeAt( 0 )
+	const c = char.charCodeAt(0)
 	return c >= 33 && c <= 126
-		? String.fromCharCode( ( c - 33 ) + 65281 )
+		? String.fromCharCode((c - 33) + 65281)
 		: char
 }
 
-export const stringToFullWidth = string => string.split( '' ).map( charToFullWidth ).join( '' )
+export const stringToFullWidth = string => string.split('').map(charToFullWidth).join('')
