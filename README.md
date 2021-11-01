@@ -10,11 +10,14 @@ Projeto que possui algumas funções para manipular um texto inserido. Ele foi d
  </div>
 
 ## Demonstração
-Home
+### Home
+![home](https://user-images.githubusercontent.com/20730349/139726858-509cf7be-fcf9-44e5-9309-508e0d0abce9.PNG)
 
-Texto Para Binário
+### Texto Para Binário
+![to-binary-text](https://user-images.githubusercontent.com/20730349/139726876-501c683a-946e-4c37-8730-2c29931b2e74.PNG)
 
-Espaçar Texto
+### Espaçar Texto
+![wide-text](https://user-images.githubusercontent.com/20730349/139726892-ce4eb0aa-e3dc-4b74-88dd-cab33f0fb139.PNG)
 
 ### `npm start`
 
